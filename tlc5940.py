@@ -1,4 +1,4 @@
-import machine
+from machine import Pin, SPI
 
 class TLC5940():
     """Simple interface to set data on the tlc5940"""
@@ -20,14 +20,14 @@ class TLC5940():
         (See documentation for specific board implementations)
         """ # pylint: disable=line-too-long
 
-        self.__gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
-        self.__blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
-        self.__vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
-        self.__xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
-        self.__spi = machine.SPI(spi_id, baudrate=10000000, bits=8,
-            sck=machine.Pin(sclk),
-            mosi=machine.Pin(sin),
-            miso=machine.Pin(sout) if sout is not None else None,
+        self.__gsclk = Pin(gsclk, Pin.OUT, value=0)
+        self.__blank = Pin(blank, Pin.OUT, value=1) # Disable all outputs
+        self.__vprg = Pin(vprg, Pin.OUT, value=0)
+        self.__xlat = Pin(xlat, Pin.OUT, value=0)
+        self.__spi = SPI(spi_id, baudrate=10000000, bits=8,
+            sck=Pin(sclk),
+            mosi=Pin(sin),
+            miso=Pin(sout) if sout is not None else None,
         )
 
     def set_data(self, byte_array):
