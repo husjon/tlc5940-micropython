@@ -1,6 +1,6 @@
 import machine
 
-class interface():
+class Interface():
     """Simple interface to set data on the tlc5940"""
 
     def __init__(self, GSCLK_pin, BLANK_pin, VPRG_pin, XLAT_pin, SCLK_pin, SIN_pin):
