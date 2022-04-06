@@ -81,7 +81,7 @@ def simple_byte_array(outputs):
 
     def bit_string_generator(outputs):
         for i in reversed(outputs):
-            for bit in range(12):
+            for _ in range(12):
                 yield i
 
     return bit_string_to_byte_array(bit_string_generator(outputs))
