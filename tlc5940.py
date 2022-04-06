@@ -3,7 +3,7 @@ import machine
 class Interface():
     """Simple interface to set data on the tlc5940"""
 
-    def __init__(self, gsclk, blank, vprg, xlat, sclk, sin):
+    def __init__(self, gsclk, blank, vprg, xlat, sclk, sin, sout=None):
         """Initialize all GPIO pins and SPI pins
 
         Any General Purpose Input/Output pins can be used for:
@@ -13,8 +13,9 @@ class Interface():
             XLAT - Latch values after programming
 
         Specific SPI (Serial Peripheral Interface) pins must be used for:
-            SCLK (GP14) - Serial clock
-            SIN (GP16) - Serial data
+            SCLK - Serial clock
+            SIN  - Serial data to the TLC5940
+            SOUT - Serial data from the TLC5940
             (see documentation for specific board implementations)
         """
         self.__gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
@@ -24,7 +25,7 @@ class Interface():
         self.__spi = machine.SPI(baudrate=10000000, bits=8,
             sck=machine.Pin(sclk),
             mosi=machine.Pin(sin),
-            miso=None,
+            miso=machine.Pin(sout) if sout is not None else None,
         )
 
     def set_data(self, byte_array):
