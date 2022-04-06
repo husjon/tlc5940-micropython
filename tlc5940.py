@@ -56,7 +56,7 @@ def bit_string_to_byte_array(bit_string):
     for bit in bit_string:
         byte += bit
         if len(byte) == 8:
-            byte_array.append(int("0b{}".format(byte)))
+            byte_array.append(int("0b{}".format(byte)))  # pylint: disable=consider-using-f-string
             byte = ""
     return byte_array
 
