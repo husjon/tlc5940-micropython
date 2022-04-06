@@ -3,7 +3,7 @@ import machine
 class TLC5940():
     """Simple interface to set data on the tlc5940"""
 
-    def __init__(self, gsclk, blank, vprg, xlat, sclk, sin, sout=None):
+    def __init__(self, gsclk, blank, vprg, xlat, sclk, sin, sout=None, spi_id=-1):
         """Initialize all GPIO pins and SPI pins
 
         Args:
@@ -15,6 +15,7 @@ class TLC5940():
             sclk (int): Serial clock
             sin (int): Serial data to the TLC5940
             sout (int): Serial data from the TLC5940
+            spi_type (int, optional): Determines SPI implementation to use (-1 software. 0, 1 etc for hardware). Defaults to -1.
 
         (See documentation for specific board implementations)
         """ # pylint: disable=line-too-long
@@ -23,7 +24,7 @@ class TLC5940():
         self.__blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
         self.__vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
         self.__xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
-        self.__spi = machine.SPI(baudrate=10000000, bits=8,
+        self.__spi = machine.SPI(spi_id, baudrate=10000000, bits=8,
             sck=machine.Pin(sclk),
             mosi=machine.Pin(sin),
             miso=machine.Pin(sout) if sout is not None else None,
