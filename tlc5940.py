@@ -3,7 +3,7 @@ import machine
 class Interface():
     """Simple interface to set data on the tlc5940"""
 
-    def __init__(self, gsclk_pin, blank_pin, vprg_pin, xlat_pin, sclk_pin, sin_pin):
+    def __init__(self, gsclk, blank, vprg, xlat, sclk, sin):
         """Initialize all GPIO pins and SPI pins
 
         Any General Purpose Input/Output pins can be used for:
@@ -17,11 +17,11 @@ class Interface():
             SIN (GP16) - Serial data
             (see documentation for specific board implementations)
         """
-        self.gsclk = machine.Pin(gsclk_pin, machine.Pin.OUT, value=0)
-        self.blank = machine.pin(blank_pin, machine.Pin.OUT, value=1) # Disable all outputs
-        self.vprg = machine.pin(vprg_pin, machine.Pin.OUT, value=0)
-        self.xlat = machine.pin(xlat_pin, machine.Pin.OUT, value=0)
-        self.spi = machine.SPI(baudrate=10000000, bits=8, pins=(sclk_pin, sin_pin, None))
+        self.gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
+        self.blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
+        self.vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
+        self.xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
+        self.spi = machine.SPI(baudrate=10000000, bits=8, pins=(sclk, sin, None))
 
     def set_data(self, byte_array):
         """Set data from byte_array in tlc5940(s)
