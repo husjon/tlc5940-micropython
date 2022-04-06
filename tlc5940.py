@@ -21,7 +21,11 @@ class Interface():
         self.__blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
         self.__vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
         self.__xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
-        self.__spi = machine.SPI(baudrate=10000000, bits=8, pins=(sclk, sin, None))
+        self.__spi = machine.SPI(baudrate=10000000, bits=8,
+            sck=machine.Pin(sclk),
+            mosi=machine.Pin(sin),
+            miso=None,
+        )
 
     def set_data(self, byte_array):
         """Set data from byte_array in tlc5940(s)
