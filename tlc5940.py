@@ -6,18 +6,19 @@ class Interface():
     def __init__(self, gsclk, blank, vprg, xlat, sclk, sin, sout=None):
         """Initialize all GPIO pins and SPI pins
 
-        Any General Purpose Input/Output pins can be used for:
-            GSCLK - Pulse Width Modulation clock (no actual PWM implemented)
-            BLANK - Disable all outputs
-            VPRG - Set programming mode
-            XLAT - Latch values after programming
+        Args:
+            gsclk (int): Pulse Width Modulation clock (no actual PWM implemented)
+            blank (int): Disable all outputs
+            vprg (int): Set programming mode
+            xlat (int): Latch values after programming
 
-        Specific SPI (Serial Peripheral Interface) pins must be used for:
-            SCLK - Serial clock
-            SIN  - Serial data to the TLC5940
-            SOUT - Serial data from the TLC5940
-            (see documentation for specific board implementations)
-        """
+            sclk (int): Serial clock
+            sin (int): Serial data to the TLC5940
+            sout (int): Serial data from the TLC5940
+
+        (See documentation for specific board implementations)
+        """ # pylint: disable=line-too-long
+
         self.__gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
         self.__blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
         self.__vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
