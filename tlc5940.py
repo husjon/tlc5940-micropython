@@ -17,11 +17,11 @@ class Interface():
             SIN (GP16) - Serial data
             (see documentation for specific board implementations)
         """
-        self.gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
-        self.blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
-        self.vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
-        self.xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
-        self.spi = machine.SPI(baudrate=10000000, bits=8, pins=(sclk, sin, None))
+        self.__gsclk = machine.Pin(gsclk, machine.Pin.OUT, value=0)
+        self.__blank = machine.pin(blank, machine.Pin.OUT, value=1) # Disable all outputs
+        self.__vprg = machine.pin(vprg, machine.Pin.OUT, value=0)
+        self.__xlat = machine.pin(xlat, machine.Pin.OUT, value=0)
+        self.__spi = machine.SPI(baudrate=10000000, bits=8, pins=(sclk, sin, None))
 
     def set_data(self, byte_array):
         """Set data from byte_array in tlc5940(s)
@@ -33,13 +33,13 @@ class Interface():
         connect SOUT to SIN in series.
         """
 
-        self.spi.write(byte_array) # Send grey scale data on SPI
-        self.blank.value(1) # Disable all outputs
-        self.xlat.value(1) # Latch data
-        self.xlat.value(0)
-        self.blank.value(0) # Enable outputs
-        self.gsclk.value(1) # Pulse PWM clock once to activate data
-        self.gsclk.value(0)
+        self.__spi.write(byte_array) # Send grey scale data on SPI
+        self.__blank.value(1) # Disable all outputs
+        self.__xlat.value(1) # Latch data
+        self.__xlat.value(0)
+        self.__blank.value(0) # Enable outputs
+        self.__gsclk.value(1) # Pulse PWM clock once to activate data
+        self.__gsclk.value(0)
 
 def bit_string_to_byte_array(bit_string):
     """Convert tlc5940 bit string to byte array for SPI"""
